@@ -13,13 +13,21 @@
       🌙/☀️
     </label>
   </div>
+
+  <h2 class="slogan">🐱 Be the Copy Cat – Master Solidity by Typing</h2>
+
+  <div class="progress-bar">
+    <span id="progress-text">Snippet 1 of 100</span>
+    <span id="timer-text">⏱ 0s</span>
+  </div>
+
   <div class="container">
     <div class="column" id="left">
       <h3 id="snippet-title">Loading...</h3>
       <pre id="solidity-code" class="no-select">Loading...</pre>
     </div>
     <div class="column" id="right">
-      <textarea id="user-input" placeholder="Type the code here..."></textarea>
+      <textarea id="user-input" placeholder="Type the code here..." oninput="startTimerIfNeeded()"></textarea>
       <div class="buttons">
         <button onclick="prevSnippet()">⬅️ Back</button>
         <button onclick="checkCode()">✅ Check</button>
@@ -29,6 +37,8 @@
       <p id="feedback"></p>
     </div>
   </div>
+
+  <canvas id="confetti-canvas"></canvas>
   <script src="script.js"></script>
 </body>
 </html>

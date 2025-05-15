@@ -6,6 +6,8 @@ const fileNames = Array.from({ length: 100 }, (_, i) => {
 
 let currentIndex = 0;
 let currentCode = "";
+let timerStarted = false;
+let startTime = 0;
 
 function getFileBaseName(index) {
   const baseNames = [
@@ -48,6 +50,8 @@ function loadSnippet(index) {
       document.getElementById("user-input").value = "";
       document.getElementById("feedback").textContent = "";
       document.getElementById("nextBtn").disabled = true;
+      document.getElementById("progress-text").textContent = `Snippet ${fileNumber} of 100`;
+      resetTimer();
     })
     .catch(err => {
       document.getElementById("snippet-title").textContent = `Error loading: ${file}`;
@@ -62,9 +66,15 @@ function normalize(text) {
 function checkCode() {
   const userInput = document.getElementById("user-input").value;
   if (normalize(userInput) === normalize(currentCode)) {
-    document.getElementById("feedback").textContent = "✅ Correct! You can proceed.";
+    const timeTaken = Math.floor((Date.now() - startTime) / 1000);
+    document.getElementById("feedback").textContent = `✅ Correct! Time: ${timeTaken}s`;
     document.getElementById("feedback").style.color = "lightgreen";
     document.getElementById("nextBtn").disabled = false;
+
+    if (currentIndex === fileNames.length - 1) {
+      document.getElementById("feedback").textContent += " 🎉 All Done!";
+      launchConfetti();
+    }
   } else {
     document.getElementById("feedback").textContent = "❌ Not matching. Please try again.";
     document.getElementById("feedback").style.color = "orange";
@@ -75,16 +85,13 @@ function clearInput() {
   document.getElementById("user-input").value = "";
   document.getElementById("feedback").textContent = "";
   document.getElementById("nextBtn").disabled = true;
+  resetTimer();
 }
 
 function nextSnippet() {
   if (currentIndex < fileNames.length - 1) {
     currentIndex++;
     loadSnippet(currentIndex);
-  } else {
-    document.getElementById("feedback").textContent = "🎉 All snippets completed!";
-    document.getElementById("feedback").style.color = "cyan";
-    document.getElementById("nextBtn").disabled = true;
   }
 }
 
@@ -99,4 +106,49 @@ function toggleTheme() {
   document.body.classList.toggle("light");
 }
 
+function startTimerIfNeeded() {
+  if (!timerStarted) {
+    timerStarted = true;
+    startTime = Date.now();
+    updateTimer();
+  }
+}
+
+function updateTimer() {
+  if (timerStarted) {
+    const now = Date.now();
+    const seconds = Math.floor((now - startTime) / 1000);
+    document.getElementById("timer-text").textContent = `⏱ ${seconds}s`;
+    setTimeout(updateTimer, 1000);
+  }
+}
+
+function resetTimer() {
+  timerStarted = false;
+  startTime = 0;
+  document.getElementById("timer-text").textContent = "⏱ 0s";
+}
+
+function launchConfetti() {
+  const canvas = document.getElementById("confetti-canvas");
+  canvas.style.display = "block";
+  const duration = 3 * 1000;
+  const animationEnd = Date.now() + duration;
+  const confetti = window.confetti.create(canvas, { resize: true });
+
+  function frame() {
+    confetti({ particleCount: 5, spread: 160 });
+    if (Date.now() < animationEnd) requestAnimationFrame(frame);
+    else canvas.style.display = "none";
+  }
+
+  frame();
+}
+
+// Load confetti library
+const script = document.createElement('script');
+script.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js';
+document.head.appendChild(script);
+
+// Init on load
 window.onload = () => loadSnippet(currentIndex);
