@@ -11,26 +11,106 @@ let startTime = 0;
 
 function getFileBaseName(index) {
   const baseNames = [
-    "HelloWorld", "Counter", "Owner", "Greeting", "Calculator",
-    "SimpleStorage", "BooleanSwitch", "SimpleEvent", "IndexedEvent", "RequireExample",
-    "AssertExample", "RevertExample", "CustomError", "ViewPureFunctions", "SimpleLoop",
-    "Conditional", "EtherUnits", "TimeUnits", "BlockInspector", "MsgInspector",
-    "ArrayStorage", "DynamicArray", "StructDefinition", "StructArray", "SimpleMapping",
-    "NestedMapping", "StructMapping", "EnumDefinition", "BytesStorage", "DynamicBytes",
-    "StringStorage", "DataLocations", "ClearMapping", "ClearArray", "Packing",
-    "PayableFunction", "ReceiveEther", "FallbackEther", "Withdrawal", "SimpleSplitter",
-    "AddressMembers", "InterfaceUsage", "ContractCaller", "ContractCreator", "Create2Deployer",
-    "LowLevelCall", "DelegateCall", "StaticCall", "TryCatchExternal", "TryCatchCreate",
-    "SimpleERC20", "ERC20Mintable", "ERC20Burnable", "ERC20Approve", "SimpleERC721",
-    "ERC721Mintable", "ERC721Enumerable", "ERC721Metadata", "ERC1155", "TokenSale",
-    "Ownable", "Pausable", "ReentrancyGuard", "SimpleModifier", "ModifierWithArgs",
-    "Inheritance", "MultipleInheritance", "SuperKeyword", "AbstractContract", "SimpleLibrary",
-    "InternalLibrary", "TimeLock", "CommitReveal", "SimpleVoting", "BasicMultisig",
-    "SimpleAuction", "DutchAuction", "MerkleProof", "SignatureVerification", "ProxyConcept",
-    "UUPSProxy", "Factory", "SimpleOracle", "GasSaver", "ImmutableVariables",
-    "ABIEncodeDecode", "EncodePacked", "EncodeWithSelector", "Hashing", "TypeInformation",
-    "AssemblyReadSlot", "AssemblyWriteSlot", "AssemblyLoop", "AssemblyMemory", "TransientStorage",
-    "Destructuring", "NamedParams", "PaymasterConcept", "MinimalProxy", "SelfDestruct"
+    "HelloWorld",
+    "Counter",
+    "Owner",
+    "Greeting",
+    "Calculator",
+    "SimpleStorage",
+    "BooleanSwitch",
+    "SimpleEvent",
+    "IndexedEvent",
+    "RequireExample",
+    "AssertExample",
+    "RevertExample",
+    "CustomError",
+    "ViewPureFunctions",
+    "SimpleLoop",
+    "Conditional",
+    "EtherUnits",
+    "TimeUnits",
+    "BlockInspector",
+    "MsgInspector",
+    "ArrayStorage",
+    "DynamicArray",
+    "StructDefinition",
+    "StructArray",
+    "SimpleMapping",
+    "NestedMapping",
+    "StructMapping",
+    "EnumDefinition",
+    "BytesStorage",
+    "DynamicBytes",
+    "StringStorage",
+    "DataLocations",
+    "ClearMapping",
+    "ClearArray",
+    "Packing",
+    "PayableFunction",
+    "ReceiveEther",
+    "FallbackEther",
+    "Withdrawal",
+    "SimpleSplitter",
+    "AddressMembers",
+    "InterfaceUsage",
+    "ContractCaller",
+    "ContractCreator",
+    "Create2Deployer",
+    "LowLevelCall",
+    "DelegateCall",
+    "StaticCall",
+    "TryCatchExternal",
+    "TryCatchCreate",
+    "SimpleERC20",
+    "ERC20Mintable",
+    "ERC20Burnable",
+    "ERC20Approve",
+    "SimpleERC721",
+    "ERC721Mintable",
+    "ERC721Enumerable",
+    "ERC721Metadata",
+    "ERC1155",
+    "TokenSale",
+    "Ownable",
+    "Pausable",
+    "ReentrancyGuard",
+    "SimpleModifier",
+    "ModifierWithArgs",
+    "Inheritance",
+    "MultipleInheritance",
+    "SuperKeyword",
+    "AbstractContract",
+    "SimpleLibrary",
+    "InternalLibrary",
+    "TimeLock",
+    "CommitReveal",
+    "SimpleVoting",
+    "BasicMultisig",
+    "SimpleAuction",
+    "DutchAuction",
+    "MerkleProof",
+    "SignatureVerification",
+    "ProxyConcept",
+    "UUPSProxy",
+    "Factory",
+    "SimpleOracle",
+    "GasSaver",
+    "ImmutableVariables",
+    "ABIEncodeDecode",
+    "EncodePacked",
+    "EncodeWithSelector",
+    "Hashing",
+    "TypeInformation",
+    "AssemblyReadSlot",
+    "AssemblyWriteSlot",
+    "AssemblyLoop",
+    "AssemblyMemory",
+    "TransientStorage",
+    "Destructuring",
+    "NamedParams",
+    "PaymasterConcept",
+    "MinimalProxy",
+    "SelfDestruct",
   ];
   return baseNames[index - 1];
 }
@@ -38,36 +118,44 @@ function getFileBaseName(index) {
 function loadSnippet(index) {
   const file = fileNames[index];
   const fileNumber = index + 1;
-  fetch(`public/snippets/${file}`)
-    .then(res => {
+  fetch(`snippets/${file}`)
+    .then((res) => {
       if (!res.ok) throw new Error("File not found");
       return res.text();
     })
-    .then(data => {
+    .then((data) => {
       currentCode = data.trim();
-      document.getElementById("snippet-title").textContent = `${fileNumber}. ${file}`;
+      document.getElementById(
+        "snippet-title"
+      ).textContent = `${fileNumber}. ${file}`;
       document.getElementById("solidity-code").textContent = currentCode;
       document.getElementById("user-input").value = "";
       document.getElementById("feedback").textContent = "";
       document.getElementById("nextBtn").disabled = true;
-      document.getElementById("progress-text").textContent = `Snippet ${fileNumber} of 100`;
+      document.getElementById(
+        "progress-text"
+      ).textContent = `Snippet ${fileNumber} of 100`;
       resetTimer();
     })
-    .catch(err => {
-      document.getElementById("snippet-title").textContent = `Error loading: ${file}`;
+    .catch((err) => {
+      document.getElementById(
+        "snippet-title"
+      ).textContent = `Error loading: ${file}`;
       document.getElementById("solidity-code").textContent = err.message;
     });
 }
 
 function normalize(text) {
-  return text.replace(/\s+/g, '').trim();
+  return text.replace(/\s+/g, "").trim();
 }
 
 function checkCode() {
   const userInput = document.getElementById("user-input").value;
   if (normalize(userInput) === normalize(currentCode)) {
     const timeTaken = Math.floor((Date.now() - startTime) / 1000);
-    document.getElementById("feedback").textContent = `✅ Correct! Time: ${timeTaken}s`;
+    document.getElementById(
+      "feedback"
+    ).textContent = `✅ Correct! Time: ${timeTaken}s`;
     document.getElementById("feedback").style.color = "lightgreen";
     document.getElementById("nextBtn").disabled = false;
 
@@ -76,7 +164,8 @@ function checkCode() {
       launchConfetti();
     }
   } else {
-    document.getElementById("feedback").textContent = "❌ Not matching. Please try again.";
+    document.getElementById("feedback").textContent =
+      "❌ Not matching. Please try again.";
     document.getElementById("feedback").style.color = "orange";
   }
 }
@@ -146,8 +235,9 @@ function launchConfetti() {
 }
 
 // Load confetti library
-const script = document.createElement('script');
-script.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js';
+const script = document.createElement("script");
+script.src =
+  "https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js";
 document.head.appendChild(script);
 
 // Init on load
