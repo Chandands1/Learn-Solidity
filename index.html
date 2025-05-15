@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solidity Typing Practice</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="dark">
+  <div class="theme-toggle">
+    <label>
+      <input type="checkbox" id="modeToggle" onchange="toggleTheme()" />
+      🌙/☀️
+    </label>
+  </div>
+  <div class="container">
+    <div class="column" id="left">
+      <h3 id="snippet-title">Loading...</h3>
+      <pre id="solidity-code" class="no-select">Loading...</pre>
+    </div>
+    <div class="column" id="right">
+      <textarea id="user-input" placeholder="Type the code here..."></textarea>
+      <div class="buttons">
+        <button onclick="prevSnippet()">⬅️ Back</button>
+        <button onclick="checkCode()">✅ Check</button>
+        <button onclick="clearInput()">🧹 Clear</button>
+        <button onclick="nextSnippet()" id="nextBtn" disabled>➡️ Next</button>
+      </div>
+      <p id="feedback"></p>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

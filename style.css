@@ -1,0 +1,119 @@
+:root {
+  --bg: #121212;
+  --text: #f1f1f1;
+  --box: #1e1e1e;
+  --btn: #28a745;
+}
+
+body.light {
+  --bg: #f7f7f7;
+  --text: #000;
+  --box: #fff;
+  --btn: #007bff;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.theme-toggle {
+  padding: 10px;
+  text-align: right;
+}
+
+.container {
+  display: flex;
+  flex: 1;
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--box);
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+.column {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+#left h3 {
+  margin: 0 0 10px;
+  font-size: 20px;
+}
+
+#left pre {
+  flex: 1;
+  padding: 20px;
+  background: #2e2e2e;
+  border-radius: 5px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  font-family: monospace;
+  color: #00ff88;
+  font-size: 18px;
+}
+
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+body.light #left pre {
+  background: #f0f0f0;
+  color: #000;
+}
+
+#right textarea {
+  flex: 1;
+  padding: 20px;
+  font-family: monospace;
+  font-size: 18px;
+  border: 1px solid #444;
+  border-radius: 5px;
+  resize: none;
+  background: #1a1a1a;
+  color: #f1f1f1;
+}
+
+body.light #right textarea {
+  background: #fff;
+  color: #000;
+}
+
+.buttons {
+  margin-top: 10px;
+}
+
+.buttons button {
+  margin-right: 10px;
+  padding: 10px 15px;
+  background: var(--btn);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.buttons button#nextBtn:disabled {
+  background: #666;
+  cursor: not-allowed;
+}
+
+#feedback {
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 16px;
+}
